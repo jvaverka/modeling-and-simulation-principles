@@ -1,2 +1,17 @@
-# model-and-sim-book-notes
-Notes from Principles of Object-Oriented Modeling and Simulation with Modelica 3.3
+# ModelSimBook
+
+> Notes from the textbook _Principles of Object-Oriented Modeling and Simulation
+> with Modelica 3.3_ by Peter Fritzson.
+
+## Setup
+
+- [Quarto](https://quarto.org/docs/get-started/) v1.3.x is required
+  [for newer Julia kernels](https://github.com/quarto-dev/quarto-cli/issues/2539)
+- Install [JupyterLab](https://jupyter.org/install)
+- Run `install_julia_kernel.jl` with Julia v1.9 to build the kernel
+
+### Experimental
+
+- Run `install_fast_kernel.jl` with Julia v1.9 to build a kernel with a precompiled
+  system image
+- Run `install_jupyter_lab.jl` with Julia v1.9 to install JupyterLab via `Conda.jl`
