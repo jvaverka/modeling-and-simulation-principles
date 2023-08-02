@@ -1,2 +1,5 @@
 *.dll
 *.so
+/.quarto/
+/.ipynb_checkpoints/
+/_book/

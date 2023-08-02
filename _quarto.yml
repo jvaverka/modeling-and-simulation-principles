@@ -1,0 +1,33 @@
+project:
+  type: book
+
+book:
+  title: "Modeling and Simulation with Julia"
+  author: ["Jacob Vaverka", "Jonathan Klaric"]
+  date: "8/2/2023"
+  favicon: cover.png
+  cover-image: cover.png
+  chapters:
+    - index.qmd
+    - intro.ipynb
+    - summary.ipynb
+    - references.ipynb
+
+bibliography: references.bib
+
+format:
+  html:
+    toc: true
+    toc-title: Page Contents
+    smooth-scroll: true
+    mainfont: Trebuchet MS
+    monofont: JuliaMono
+    theme:
+      light: cosmo
+      dark: cyborg
+  pdf:
+    documentclass: scrreprt
+
+highlight-style: atom-one
+
+jupyter: julia-1.9
