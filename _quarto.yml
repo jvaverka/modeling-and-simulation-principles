@@ -25,8 +25,6 @@ format:
     theme:
       light: cosmo
       dark: cyborg
-  pdf:
-    documentclass: scrreprt
 
 highlight-style: atom-one
 
