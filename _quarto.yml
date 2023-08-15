@@ -9,6 +9,7 @@ book:
   cover-image: cover.png
   chapters:
     - index.qmd
+    - hello.ipynb
     - intro.ipynb
     - summary.ipynb
     - references.ipynb
