@@ -23,8 +23,8 @@ format:
     mainfont: Trebuchet MS
     monofont: JuliaMono
     theme:
-      light: cosmo
-      dark: cyborg
+      light: [cosmo, light.scss]
+      dark: [cyborg, dark.scss]
 
 highlight-style: atom-one
 
