@@ -1,21 +1,22 @@
 # Why? {.unnumbered}
 
 The Julia Programming Language is revolutionizing technical and scientific computing across many industries.
-Language features such as differentiability and multiple dispatch have made Julia the perfect tool for building
+Modern language features such as differentiability and multiple dispatch have made Julia the perfect tool for building
 [SciML](sciml.ai) - an open source ecosystem for scientific machine learning libraries.
 
 Amoung many other modules, the SciML ecosystem includes an acausal modeling framework and the most comprehensive
 collection of differential equation solvers that exists today. These modules form the fundation of SciML and their
-flexibility makes them viable tools for working in any industry. I believe these tools are so powerful that they
-open the door to advanced modeling and simulation capabilities in more domains than ever before. Therefore, this
-project details my learning how to perform modeling and simulation to solve real problems with Julia and SciML.
+flexibility makes them viable tools for working in any industry. These tools are so powerful that they
+open the door to advanced modeling and simulation capabilities in any domain. This project serves as a guide to
+perform modeling and simulation to solve real problems with Julia and SciML.
 
-The best hope I have to achieve my goal is to stand on the shoulders of giants. What follows is a collection of
-notes, teachings and exercises from the exceptional books _Principle of Object-Oriented Modeling and Simulation
-with Modelica 3.3_[^pooms] by Dr. Peter Fritzson and _Modelica by Example_[^mbe] by Dr. Michael M. Tiller.
-All content is translated to Julia and uses various modules from SciMl. Both of these books delve into modeling
-and simulation using Modelica which is a fantastic starting point since this is the foundation of many great
-tools which have established industrial modeling and simulation today. Thank you everyone that contributed to these works.
+This guide is a collection of notes, teachings and exercises from many sources including the exceptional books
+_Principle of Object-Oriented Modeling and Simulation with Modelica 3.3_[^pooms] by Dr. Peter Fritzson and
+_Modelica by Example_[^mbe] by Dr. Michael M. Tiller. All content is translated to Julia and uses various modules
+from SciMl. Thank you everyone that contributed to these works.
+
+This is a book created from markdown and executable code.
+See @knuth84 for additional discussion of literate programming.
 
 [^pooms]: Fritzson covers the Modelica language in impressive depth from the basic concepts such as cyber-physical,
           equation-base, object-oriented, system, model, and simulation, while also incorporating over a hundred
