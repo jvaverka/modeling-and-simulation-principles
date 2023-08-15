@@ -5,6 +5,8 @@ book:
   title: "Modeling and Simulation with Julia"
   author: ["Jacob Vaverka", "Jonathan Klaric"]
   date: "8/2/2023"
+  repo-url: https://github.com/jvaverka/ModelSimBook
+  repo-actions: issue
   favicon: cover.png
   cover-image: cover.png
   chapters:
