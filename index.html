@@ -23,7 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -33,7 +52,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./intro.html" rel="next">
+<link href="./hello.html" rel="next">
 <link href="./cover.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -116,20 +135,26 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./hello.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Hello, World!</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">References</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">References</span></span></a>
   </div>
 </li>
     </ul>
@@ -182,11 +207,17 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="why" class="level1 unnumbered">
 <h1 class="unnumbered">Why?</h1><p><img src="cover.png" title="Modeling and Simulation with Julia" class="quarto-cover-image img-fluid"></p>
-<p>The Julia Programming Language is revolutionizing technical and scientific computing across many industries. Language features such as differentiability and multiple dispatch have made Julia the perfect tool for building <a href="sciml.ai">SciML</a> - an open source ecosystem for scientific machine learning libraries.</p>
-<p>Amoung many other modules, the SciML ecosystem includes an acausal modeling framework and the most comprehensive collection of differential equation solvers that exists today. These modules form the fundation of SciML and their flexibility makes them viable tools for working in any industry. I believe these tools are so powerful that they open the door to advanced modeling and simulation capabilities in more domains than ever before. Therefore, this project details my learning how to perform modeling and simulation to solve real problems with Julia and SciML.</p>
-<p>The best hope I have to achieve my goal is to stand on the shoulders of giants. What follows is a collection of notes, teachings and exercises from the exceptional books <em>Principle of Object-Oriented Modeling and Simulation with Modelica 3.3</em><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> by Dr.&nbsp;Peter Fritzson and <em>Modelica by Example</em><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> by Dr.&nbsp;Michael M. Tiller. All content is translated to Julia and uses various modules from SciMl. Both of these books delve into modeling and simulation using Modelica which is a fantastic starting point since this is the foundation of many great tools which have established industrial modeling and simulation today. Thank you everyone that contributed to these works.</p>
+<p>The Julia Programming Language is revolutionizing technical and scientific computing across many industries. Modern language features such as differentiability and multiple dispatch have made Julia the perfect tool for building <a href="sciml.ai">SciML</a> - an open source ecosystem for scientific machine learning libraries.</p>
+<p>Amoung many other modules, the SciML ecosystem includes an acausal modeling framework and the most comprehensive collection of differential equation solvers that exists today. These modules form the fundation of SciML and their flexibility makes them viable tools for working in any industry. These tools are so powerful that they open the door to advanced modeling and simulation capabilities in any domain. This project serves as a guide to perform modeling and simulation to solve real problems with Julia and SciML.</p>
+<p>This guide is a collection of notes, teachings and exercises from many sources including the exceptional books <em>Principle of Object-Oriented Modeling and Simulation with Modelica 3.3</em><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> by Dr.&nbsp;Peter Fritzson and <em>Modelica by Example</em><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> by Dr.&nbsp;Michael M. Tiller. All content is translated to Julia and uses various modules from SciMl. Thank you everyone that contributed to these works.</p>
+<p>This is a book created from markdown and executable code. See <span class="citation" data-cites="knuth84">Knuth (<a href="references.html#ref-knuth84" role="doc-biblioref">1984</a>)</span> for additional discussion of literate programming.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-knuth84" class="csl-entry" role="listitem">
+Knuth, Donald E. 1984. <span>“Literate Programming.”</span> <em>Comput. J.</em> 27 (2): 97–111. <a href="https://doi.org/10.1093/comjnl/27.2.97">https://doi.org/10.1093/comjnl/27.2.97</a>.
+</div>
+</div>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
@@ -549,8 +580,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   <div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./intro.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./hello.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Hello, World!</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

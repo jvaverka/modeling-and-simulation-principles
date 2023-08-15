@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Modeling and Simulation with Julia",
     "section": "",
-    "text": "Why?\nThe Julia Programming Language is revolutionizing technical and scientific computing across many industries. Language features such as differentiability and multiple dispatch have made Julia the perfect tool for building SciML - an open source ecosystem for scientific machine learning libraries.\nAmoung many other modules, the SciML ecosystem includes an acausal modeling framework and the most comprehensive collection of differential equation solvers that exists today. These modules form the fundation of SciML and their flexibility makes them viable tools for working in any industry. I believe these tools are so powerful that they open the door to advanced modeling and simulation capabilities in more domains than ever before. Therefore, this project details my learning how to perform modeling and simulation to solve real problems with Julia and SciML.\nThe best hope I have to achieve my goal is to stand on the shoulders of giants. What follows is a collection of notes, teachings and exercises from the exceptional books Principle of Object-Oriented Modeling and Simulation with Modelica 3.31 by Dr. Peter Fritzson and Modelica by Example2 by Dr. Michael M. Tiller. All content is translated to Julia and uses various modules from SciMl. Both of these books delve into modeling and simulation using Modelica which is a fantastic starting point since this is the foundation of many great tools which have established industrial modeling and simulation today. Thank you everyone that contributed to these works."
+    "text": "Why?\nThe Julia Programming Language is revolutionizing technical and scientific computing across many industries. Modern language features such as differentiability and multiple dispatch have made Julia the perfect tool for building SciML - an open source ecosystem for scientific machine learning libraries.\nAmoung many other modules, the SciML ecosystem includes an acausal modeling framework and the most comprehensive collection of differential equation solvers that exists today. These modules form the fundation of SciML and their flexibility makes them viable tools for working in any industry. These tools are so powerful that they open the door to advanced modeling and simulation capabilities in any domain. This project serves as a guide to perform modeling and simulation to solve real problems with Julia and SciML.\nThis guide is a collection of notes, teachings and exercises from many sources including the exceptional books Principle of Object-Oriented Modeling and Simulation with Modelica 3.31 by Dr. Peter Fritzson and Modelica by Example2 by Dr. Michael M. Tiller. All content is translated to Julia and uses various modules from SciMl. Thank you everyone that contributed to these works.\nThis is a book created from markdown and executable code. See Knuth (1984) for additional discussion of literate programming."
   },
   {
     "objectID": "index.html#footnotes",
@@ -14,30 +14,128 @@
     "text": "Fritzson covers the Modelica language in impressive depth from the basic concepts such as cyber-physical, equation-base, object-oriented, system, model, and simulation, while also incorporating over a hundred exercises and their solutions for a tutorial, easy-to-read experience. Find a copy at https://ieeexplore.ieee.org/book/7022515.↩︎\nTiller takes a different and welcome approach by covering the Modelica language with practical examples and by optimizing the book for online consumption. The book is available for free at https://mbe.modelica.university/ and provides a rich and interactive learning environment.↩︎"
   },
   {
-    "objectID": "intro.html#hello-modelingtoolkit",
-    "href": "intro.html#hello-modelingtoolkit",
-    "title": "1  Introduction",
-    "section": "1.1 Hello, ModelingToolkit!",
-    "text": "1.1 Hello, ModelingToolkit!\nFirst, load all modules needed for the hello, world example for ModelingToolkit.jl.\n\n1using ModelingToolkit\n2using ModelingToolkitStandardLibrary\n3using DifferentialEquations\n4using Plots\n\n\n1\n\nAcausal modeling framework for building models\n\n2\n\nCollection of reusable component models commonly used in modeling various systems\n\n3\n\nState-of-the-art collection of differential equations solvers\n\n4\n\nCreating visualizations from simulation outputs\n\n\n\n\nNext, the independent and dependent variables are defined.\nHere, t is the independent variable representing time and x is a variable which depends on time, t.\n\n@variables t x(t)\n\n\\[ \\begin{equation}\n\\left[\n\\begin{array}{c}\nt \\\\\nx\\left( t \\right) \\\\\n\\end{array}\n\\right]\n\\end{equation}\n\\]\n\n\nAn operator must also be defined which performs differentiation with respect to time, t.\n\nD = Differential(t)\n\n(::Differential) (generic function with 3 methods)\n\n\nModel parameters are defined in a similar fashion. These are inputs not outputs.\n\n@parameters τ\n\n\\[ \\begin{equation}\n\\left[\n\\begin{array}{c}\n\\tau \\\\\n\\end{array}\n\\right]\n\\end{equation}\n\\]\n\n\nConstants can also be defined to represent known quantities, e.g., gravity, speed of light, etc.\n\n@constants h = 1\n\n\\[ \\begin{equation}\n\\left[\n\\begin{array}{c}\nh \\\\\n\\end{array}\n\\right]\n\\end{equation}\n\\]\n\n\nCreate a system of ordinary differential equations, of type ODESystem, which consists of a single equation.\n\n@named fol = ODESystem([D(x) ~ (h - x) / τ])\n\n\\[ \\begin{align}\n\\frac{\\mathrm{d} x\\left( t \\right)}{\\mathrm{d}t} =& \\frac{h - x\\left( t \\right)}{\\tau}\n\\end{align}\n\\]\n\n\nNow that a system or _model_exists, we must describe a simulation that we want to perform on this model. We call this a problem, and assign it to type ODEProblem.\nThere are several inputs we can use to create the problem we wish to study - to start, only consider the ordered arguments shown below:\n\nmodel which has type ODESystem\ninitial conditions which is represented by a Pair1\ntime span which is represented by a Tuple2\nparameter values which again is represented by a Pair\n\n\nprob = ODEProblem(fol, [x =&gt; 0.0], (0.0, 10.0), [τ =&gt; 3.0])\n\n\nODEProblem with uType Vector{Float64} and tType Float64. In-place: true\ntimespan: (0.0, 10.0)\nu0: 1-element Vector{Float64}:\n 0.0\n\n\n\nOnce a problem has been defined, we use the common solve interface. In this simple example, only 1 argument is provided - the ODEProblem.\n\nsol = solve(prob)\n\nretcode: Success\nInterpolation: specialized 4th order \"free\" interpolation, specialized 2nd order \"free\" stiffness-aware interpolation\nt: 14-element Vector{Float64}:\n  0.0\n  9.999999999999999e-5\n  0.0010999999999999998\n  0.011099999999999997\n  0.11109999999999996\n  0.44196924781807967\n  1.0112520758966859\n  1.7621013896357889\n  2.7411196006326954\n  3.954782507222947\n  5.435343082434807\n  7.201735027334962\n  9.291406745592692\n 10.0\nu: 14-element Vector{Vector{Float64}}:\n [0.0]\n [3.333277778395056e-5]\n [0.00036659945265974064]\n [0.0036931634343634343]\n [0.03635598665335361]\n [0.13698489268755673]\n [0.28615114066001385]\n [0.44421130189743585]\n [0.5989648996141729]\n [0.7323994349297618]\n [0.836636389514038]\n [0.9093330812230747]\n [0.9548191028045533]\n [0.9643240555350271]\n\n\n\nsol isa ODESolution\n\ntrue\n\n\nFinally, we want to create a graph using the data from our solution. This is very easy since there exists a plotting recipe specifically for ODESolution objects (which you can see from above is exactly the type produces by the solve function).\n\nplot(sol)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThat was easy! There is only one output plotted because there was only one dependent variable in our model. When working with larger models, specify which variables should be plotted by providing a list to the idxs keyword argument (along with any other attributes you want to modify).\n\nplot(\n    sol;\n    idxs=[x],\n    size=(300,200),\n    title=\"Hello!\",\n    ylabel=\"unit\",\n    legend=:outerbottomright,\n    color=:purple,\n    linewidth=3,\n    linestyle=:dash\n)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+    "objectID": "hello.html#loading-packages",
+    "href": "hello.html#loading-packages",
+    "title": "1  Hello, World!",
+    "section": "1.1 Loading Packages",
+    "text": "1.1 Loading Packages\nFirst, load all modules needed for the example for ModelingToolkit.jl.\n\n1using ModelingToolkit\n2using ModelingToolkitStandardLibrary\n3using DifferentialEquations\n4using Plots\n\n\n1\n\nAcausal modeling framework for building models\n\n2\n\nCollection of reusable component models commonly used in modeling various systems\n\n3\n\nState-of-the-art collection of differential equations solvers\n\n4\n\nCreating visualizations from simulation outputs"
   },
   {
-    "objectID": "intro.html#footnotes",
-    "href": "intro.html#footnotes",
-    "title": "1  Introduction",
+    "objectID": "hello.html#defining-a-model",
+    "href": "hello.html#defining-a-model",
+    "title": "1  Hello, World!",
+    "section": "1.2 Defining a Model",
+    "text": "1.2 Defining a Model\nNext, the independent and dependent variables are defined.\nHere, t is the independent variable representing time and x is a variable which depends on time, t.\n\n@variables t x(t)\n\n\\[ \\begin{equation}\n\\left[\n\\begin{array}{c}\nt \\\\\nx\\left( t \\right) \\\\\n\\end{array}\n\\right]\n\\end{equation}\n\\]\n\n\nAn operator must also be defined which performs differentiation with respect to time, t.\n\nD = Differential(t)\n\n(::Differential) (generic function with 3 methods)\n\n\nModel parameters are defined in a similar fashion. These are inputs not outputs.\n\n@parameters a\n\n\\[ \\begin{equation}\n\\left[\n\\begin{array}{c}\na \\\\\n\\end{array}\n\\right]\n\\end{equation}\n\\]\n\n\nCreate a system of ordinary differential equations, of type ODESystem, which consists of a single equation.\n\n@named fol = ODESystem([D(x) ~ -a * x])\n\n\\[ \\begin{align}\n\\frac{\\mathrm{d} x\\left( t \\right)}{\\mathrm{d}t} =&  - a x\\left( t \\right)\n\\end{align}\n\\]"
+  },
+  {
+    "objectID": "hello.html#setting-up-a-simulation",
+    "href": "hello.html#setting-up-a-simulation",
+    "title": "1  Hello, World!",
+    "section": "1.3 Setting up a Simulation",
+    "text": "1.3 Setting up a Simulation\nNow that a system or model exists, we must describe a simulation that we want to perform on this model. We call this a problem, and assign it to type ODEProblem.\nThere are several inputs we can use to create the problem we wish to study - to start, only consider the ordered arguments shown below:\n\nmodel which has type ODESystem\ninitial conditions which is represented by a Pair1\ntime span which is represented by a Tuple2\nparameter values which again is represented by a Pair\n\n\nprob = ODEProblem(fol, [x =&gt; 1.0], (0.0, 5.0), [a =&gt; 1.0])\n\n\nODEProblem with uType Vector{Float64} and tType Float64. In-place: true\ntimespan: (0.0, 5.0)\nu0: 1-element Vector{Float64}:\n 1.0\n\n\n\nOnce a problem has been defined, we use the common solve interface. In this simple example, only 1 argument is provided - the ODEProblem.\n\nsol = solve(prob)\n\nretcode: Success\nInterpolation: specialized 4th order \"free\" interpolation, specialized 2nd order \"free\" stiffness-aware interpolation\nt: 12-element Vector{Float64}:\n 0.0\n 0.10001999200479662\n 0.34208427873632274\n 0.6553980290285384\n 1.0312652902321524\n 1.4709406498424789\n 1.9659577002710475\n 2.5116828197051655\n 3.1005131845932916\n 3.7267802882369727\n 4.384652335738251\n 5.0\nu: 12-element Vector{Vector{Float64}}:\n [1.0]\n [0.9048193287657775]\n [0.7102883564034526]\n [0.5192354320104403]\n [0.35655575232768827]\n [0.2297097760377978]\n [0.1400224680615468]\n [0.08113256081377467]\n [0.04502714038509206]\n [0.024071202553369336]\n [0.012468055449568477]\n [0.006738503575110172]\n\n\n\nsol isa ODESolution\n\ntrue"
+  },
+  {
+    "objectID": "hello.html#visualizing-results",
+    "href": "hello.html#visualizing-results",
+    "title": "1  Hello, World!",
+    "section": "1.4 Visualizing Results",
+    "text": "1.4 Visualizing Results\nFinally, we want to create a graph using the data from our solution. This is very easy since there exists a plotting recipe specifically for ODESolution objects (which you can see from above is exactly the type produces by the solve function).\n\nplot(sol)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThat was easy! There is only one output plotted because there was only one dependent variable in our model. When working with larger models, specify which variables should be plotted by providing a list to the idxs keyword argument (along with any other attributes you want to modify).\n\nplot(\n    sol;\n    idxs=[x],\n    size=(300,200),\n    title=\"Hello, World!\",\n    ylabel=\"unit\",\n    legend=:outerbottomright,\n    color=:purple,\n    linewidth=3,\n    linestyle=:dash\n)"
+  },
+  {
+    "objectID": "hello.html#summary",
+    "href": "hello.html#summary",
+    "title": "1  Hello, World!",
+    "section": "1.5 Summary",
+    "text": "1.5 Summary\nWe just loaded packages, defined a model, ran a simulation and visualized results. Although this example model is simple, many workflows will require these same steps."
+  },
+  {
+    "objectID": "hello.html#footnotes",
+    "href": "hello.html#footnotes",
+    "title": "1  Hello, World!",
     "section": "",
     "text": "In Julia, a Pair is a collection of two elements. A Pair has fields first and second for accessing each element. To construct a Pair, the sytax is [first =&gt; second] (notice the surrounding square brackets).↩︎\nIn Julia, a Tuple is a collection of any number of elements. Accessing elements of a Tuple is only possible using their index as a Tuple does not have field names. To construct a Tuple, the syntax is (1, 'b', pi)(notice the surrounding parentheses).↩︎"
   },
   {
+    "objectID": "intro.html#core-concepts",
+    "href": "intro.html#core-concepts",
+    "title": "2  Introduction",
+    "section": "2.1 Core Concepts",
+    "text": "2.1 Core Concepts\n\nSystem & Experiment\nModel & Simulation"
+  },
+  {
+    "objectID": "intro.html#what-is-a-system",
+    "href": "intro.html#what-is-a-system",
+    "title": "2  Introduction",
+    "section": "2.2 What is a System?",
+    "text": "2.2 What is a System?\nThe atmosphere is a system. An automobile is a system. A battery pack is a system. A system is a real-world thing (or things) we want to study and understand.\nSome rules for using and defining systems:\n\nsystems can be (almost) anything\nsystems can be made of smaller systems\nsystems must be observable\n\nie, it should have some outputs\n\nthese outputs are variables which are determined by the system\n\n\nsystems can be controllable\n\nie, we can provide inputs in the form of variables\n\nbut not all inputs are controllable"
+  },
+  {
+    "objectID": "intro.html#what-is-an-experiment",
+    "href": "intro.html#what-is-an-experiment",
+    "title": "2  Introduction",
+    "section": "2.3 What is an Experiment?",
+    "text": "2.3 What is an Experiment?\nIf a system is some real-world thing we want to study, then an experiment is the method by which we study it in physical space. To perform an experiment, we apply some conditions to the system’s inputs and measure the response of the system’s outputs.\n\nexperiments require a system that is both observable and controllable\nperforming experiments on large systems can be difficult if:\n\nsystem inputs cannot be controlled\n\naka disturbance inputs\n\nsystem outputs cannot be measured\n\naka internal states\n\n\nperforming experiments may be infeasible due to:\n\ncost: physical prototypes are good for experimentation but very expensive to make\ndanger: some physical conditions cannot easily be replicated without significant risk\nlimitations: some physical systems do not exist (its design may require new experimentation)\n\n\nExperimentation is a fantastic scientific tool. However, its drawbacks and limitations create certain challenges. We can start to address these challenges with models."
+  },
+  {
+    "objectID": "intro.html#what-is-a-model",
+    "href": "intro.html#what-is-a-model",
+    "title": "2  Introduction",
+    "section": "2.4 What is a Model?",
+    "text": "2.4 What is a Model?\nA model is a substitute which can be used to perform simplified experiments. Therefore, a model can also be called a simplified system.\n\na model must always be thought of in relation to the experiment it offers for a system\nthe term “model” has many common uses:\n\nmental: how we think about a system\nverbal: how we express a system and its behavior using words\nphysical: a real-world object that mimics some properties of an actual system\nmathematical: a description of a system where relationships between variables and parameters are expressed by equations\n\nmost laws of nature are mathematical models"
+  },
+  {
+    "objectID": "intro.html#what-is-a-simulation",
+    "href": "intro.html#what-is-a-simulation",
+    "title": "2  Introduction",
+    "section": "2.5 What is a Simulation?",
+    "text": "2.5 What is a Simulation?\n\nSimulation (Sim-u-la-tion), n. [F. simulation, L. simulatio.] The act of simulating, or assuming an appearance which is feigned, or not true\nDerived from the Latin simulare - to pretend\n\nJust as experiments are conducted on systems, simulations can be conducted on models. When relying on computer programs to perform simulations, it is important that the model be a mathematical one. We said that models must be considered in relation to the experiment it offers - this dictates what simulations can be run and what insight can be gained from the results.\nEvery simulation is comprised of two parts: experimental and model descriptions. A simulation’s experimental frame describes what experiements are fit to be performed. This frame depends on the numerical model description of the simulation and how well the computational experiment correlates to the real-world system.\n\n2.5.1 Why Perform Simulations?\n\ncost: expense of compute can be mch lower than other forms of experimentation\ntime: some real-world experiments are limited by the time period needed to perform them; simulations can be quickly computed and observed in simulations\nvisibility: some variables may be inaccessible in the real-world; simulations offer much more transparency and introspection which is a powerful tool for understanding\ndesign of experiment: parameters and variables can be easily manipulated whereas achieving the same conditions in the real-world can be non-trivial\nsuppression of disturbances: simulations can cut through the noise of a physical instrumentation in real-world experiments\nsuppression of second-order effects: keep us focused on primary dynamics and effects\n\n\n\n2.5.2 Why Not Perform Simulations?\n\nbelieving simulation results outside its experimental frame1\nmisunderstanding limitations of a model and its corresponding simulation results (and making poor design decisions in the end)"
+  },
+  {
+    "objectID": "intro.html#building-models",
+    "href": "intro.html#building-models",
+    "title": "2  Introduction",
+    "section": "2.6 Building Models",
+    "text": "2.6 Building Models\nBuilding useful models requires the interseciton of several disciplines including but not limited to general experience/observations, domain knowledge, and software engineering.\nIn general the best approach is to build up from first principles. Start with the smallest component at the heart of the system and try to build out from there."
+  },
+  {
+    "objectID": "intro.html#analyzing-models",
+    "href": "intro.html#analyzing-models",
+    "title": "2  Introduction",
+    "section": "2.7 Analyzing Models",
+    "text": "2.7 Analyzing Models\nAside from computing simulations, what other methods can be used to analyze models?\n\nsensitivity analysis: answers how sensitive model behavior is to changes in its input\nmodel-based diagnosis: how can certain problematic behaviors be identified and tied to model inputs\nmodel verification / validation: answers can the model outputs be trusted for the intended experiment"
+  },
+  {
+    "objectID": "intro.html#mathematical-models",
+    "href": "intro.html#mathematical-models",
+    "title": "2  Introduction",
+    "section": "2.8 Mathematical Models",
+    "text": "2.8 Mathematical Models\nUnderstanding some dualities in the possible kinds of mathematical models.\n\ndynamic time-dependent versus static\nevolving continously over time versus at discrete time points\nquantitative versus qualitative\ndescribing physical distribution of quantities versus lumped quantities\nstochastic / probability-based versus deterministic\n\nMathematical models can also be made up of different kinds of equations.\n\ndifferential: contain time derivatives such as \\(\\frac{\\delta x}{\\delta t}\\), also denoted \\(\\dot{x}\\)\nalgebraic: contain no differentiated variables\npartial differential: contain derivatives with respect to (w.r.t.) other variables than time, such as \\(\\frac{\\delta a}{\\delta t} = \\frac{\\delta^2a}{\\delta z^2}\\)\ndifference: express relations between variables, e.g., at different points in time \\(x(t + 1) = 3x(t) + 2\\)"
+  },
+  {
+    "objectID": "intro.html#summary",
+    "href": "intro.html#summary",
+    "title": "2  Introduction",
+    "section": "2.9 Summary",
+    "text": "2.9 Summary\nThese concepts and terms for the foundation. Using these building blocks we are ready to commence our journey into modeling and simulation."
+  },
+  {
+    "objectID": "intro.html#footnotes",
+    "href": "intro.html#footnotes",
+    "title": "2  Introduction",
+    "section": "",
+    "text": "The Pygmalion effect is a psychological phenomenon in which high expectations lead to improved performance in a given area and low expectations lead to worse.↩︎"
+  },
+  {
     "objectID": "summary.html",
     "href": "summary.html",
-    "title": "2  Summary",
+    "title": "3  Summary",
     "section": "",
-    "text": "In summary, this book has no content whatsoever."
+    "text": "In summary, modeling and simulation in Julia is pretty cool."
   },
   {
     "objectID": "references.html",
     "href": "references.html",
-    "title": "3  References",
+    "title": "4  References",
     "section": "",
     "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
   }
